@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import securityMiddleware from '#middleware/security.middleware.js';
 
 import authRoutes from '#routes/auth.route.js';
 
@@ -19,6 +20,8 @@ app.use(
     stream: { write: message => logger.info(message.trim()) },
   })
 );
+
+app.use(securityMiddleware);
 
 app.get('/', (req, res) => {
   logger.info('Hello from Acquisitions!');
