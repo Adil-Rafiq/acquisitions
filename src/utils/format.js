@@ -1,11 +1,25 @@
 export const formatValidationErrors = errors => {
-  if (!errors || errors.length === 0) {
-    return 'Validation failed with no errors.';
+  // Case: no errors
+  if (!errors || !errors.issues || errors.issues.length === 0) {
+    return {
+      error: 'Validation failed',
+      fields: {},
+    };
   }
 
-  if (Array.isArray(errors.issues)) {
-    return errors.issues.map(issue => issue.message).join('; ');
+  const fields = {};
+
+  for (const issue of errors.issues) {
+    const field = issue.path.join('.') || 'root';
+
+    // Keep only the first error per field
+    if (!fields[field]) {
+      fields[field] = issue.message;
+    }
   }
 
-  return JSON.stringify(errors);
+  return {
+    error: 'Validation failed',
+    fields,
+  };
 };

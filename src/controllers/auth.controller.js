@@ -7,6 +7,7 @@ import { cookies } from '#utils/cookies.js';
 
 export const signup = async (req, res, next) => {
   try {
+    console.log('Signing up: ', req.body);
     const validationResult = signupSchema.safeParse(req.body);
     if (!validationResult.success) {
       return res.status(400).json({
