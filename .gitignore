@@ -8,3 +8,5 @@ node_modules/
 logs/
 *.log
 .neon_local/
+
+coverage/
